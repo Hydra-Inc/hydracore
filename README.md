@@ -1,7 +1,7 @@
 HydraCore
 =========
 
-This is a free python library useful to manipulate with a popular game: Heroes of Migh and Magic 3 by 3DO.
+This is a free python library useful to manipulate with a popular game: Heroes of Might and Magic III by 3DO.
 
 Initial goal of this library was to make a program which could train you in playing PVP games on Jebus Outcast/Jebus Cross templates without actauly a human opponent.
 The idea is too boost the computer opponent, but modifing a late game savegame file, which later you could load and fight a powerful compotor.

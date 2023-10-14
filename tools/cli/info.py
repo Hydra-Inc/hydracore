@@ -27,7 +27,7 @@ def info_main(cmdargs):
         return
 
     from hydracore.format.heroes3 import Heroes3SaveGameFile
-    from hydracore.heroes3.savegame.savegame import savegame
+    from hydracore.heroes3.savegame.main import savegame
     
     sgf = Heroes3SaveGameFile(cmdargs.savegame)
     heroes3sg = savegame(sgf)
@@ -36,18 +36,6 @@ def info_main(cmdargs):
 
     return 
     sg = Savefile(cmdargs.savegame)
-    #var gameVersionMajor = Bytes[8];
-    #var gameVersionMinor = Bytes[12];
-    #if (gameVersionMajor >= 44 && gameVersionMinor >= 5)
-    #{
-    #    SetHOTA();
-    #}
-    #else
-    #{
-    #    SetClassic();
-    #}
     print('VERSION', sg.raw[8], sg.raw[12] )
-     
 
-    print('YAY!')
     print()
