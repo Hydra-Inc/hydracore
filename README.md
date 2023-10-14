@@ -12,7 +12,7 @@ Savegame format of the original game is not know, but comrades all over the worl
 Usage
 -----
 
-# TODO
+This section is still to do.
 
 
 Thanks to
@@ -31,5 +31,6 @@ License
 -------
 
 Copyright (c) 2023 by hydra-core aka TechnoCore
+
 Released as free open source software under the MIT License,
 see [LICENSE](LICENSE) for full license text.
