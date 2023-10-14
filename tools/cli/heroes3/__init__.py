@@ -1,0 +1,1 @@
+from .main import heroes3_add_cmdargs

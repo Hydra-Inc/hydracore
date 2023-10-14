@@ -1,0 +1,4 @@
+#!/bin/bash 
+
+PYTHONPATH=lib/src pytest-3 "$@"
+
