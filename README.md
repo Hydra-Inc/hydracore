@@ -1,18 +1,94 @@
-HydraCore
-=========
+HydraCore Library
+=================
 
-This is a free python library useful to manipulate with a popular game: Heroes of Might and Magic III by 3DO.
+A free Python library offers useful tools for manipulating the popular game "Heroes of Might and Magic III" by 3DO.
 
-Initial goal of this library was to make a program which could train you in playing PVP games on Jebus Outcast/Jebus Cross templates without actauly a human opponent.
-The idea is too boost the computer opponent, but modifing a late game savegame file, which later you could load and fight a powerful compotor.
+The initial goal of this library was to create a program that could help train users in playing PvP games on the Jebus Outcast/Jebus Cross templates without actually needing a human opponent. The idea is to enhance the computer opponent by modifying a late-game save file, which you can then load and battle against a formidable computer adversary.
 
-Savegame format of the original game is not know, but comrades all over the world (see 'Thanks to' section) reversed it and now we can build some useful tools like this one.
+The save game format of the original game was unknown, but enthusiasts from all over the world (see the 'Thanks to' section) have reverse-engineered it. Now, we can develop handy tools like this one.
 
 
-Usage
------
+Command line interface
+======================
 
-This section is still to do.
+
+Usage of Heroes 3 model viewer
+------------------------------
+
+Allows to list internal structure of SoD (Shadow of Death) and HotA (Hprn of the Abyss) game versions.
+
+List all HotA artifacts:
+```bash
+./hydracore heroes3 model hota artifacts
+```
+List all HotA creatures:
+```bash
+./hydracore heroes3 model hota creatures
+```
+List all HotA skills:
+```bash
+./hydracore heroes3 model hota skills
+```
+List all HotA spells:
+```bash
+./hydracore heroes3 model hota spells
+```
+List all HotA towns:
+```bash
+./hydracore heroes3 model hota towns
+```
+List all HotA heroclasses:
+```bash
+./hydracore heroes3 model hota heroclasses
+```
+List all HotA heroes:
+```bash
+./hydracore heroes3 model hota hero
+```
+List all HotA heroes:
+```bash
+./hydracore heroes3 model hota templates
+```
+
+Usage of SaveGame viewer and changer
+------------------------------------
+
+Utility to play with the save game file, allows to debug and easy test our file for different infromation.
+
+Print full game info from the given file.
+```bash
+./hydracore heroes3 savegame data/heroes3/savegames/testing/x5.GM1 print gameinfo
+```
+
+Print all heroes from the provided savegame file:
+```bash
+./hydracore heroes3 savegame data/heroes3/savegames/testing/x5.GM1 print heroes
+```
+
+Dump raw unpacked heroes data from save game:
+```bash
+./hydracore heroes3 savegame data/heroes3/savegames/testing/x5.GM1 dump hero --out-file aa.bin --filter-name Манфред
+```
+
+Change hero:
+*currently not done yet*
+
+You may see more in the help of the command line utility.
+
+
+Python API
+======================
+
+To be continued.
+
+List all HotA relict artifacts:
+```python
+from hydracore.heroes3.model.artifact import Artifacts
+
+for artifact in Artifacts('hota').Relic():
+    print(artifact.name)
+```
+
 
 
 Thanks to
