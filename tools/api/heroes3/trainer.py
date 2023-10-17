@@ -87,8 +87,13 @@ def run_trainer(data):
                   "Something wrong during training happened", str(e))
 
         heroes3sg.pack()
+        
+        with tempfile.NamedTemporaryFile() as f:
+            heroes3sg.file.save(f.name)
+            with open(f.name, 'rb') as f:
+                data = f.read()
 
-        data = heroes3sg.file.binary_data
+        # data = heroes3sg.file.binary_data
         flow = json.dumps(trainer.Random.pack())
 
         result['message'] = 'success'

@@ -67,7 +67,8 @@ Print all heroes from the provided savegame file:
 
 Dump raw unpacked heroes data from save game:
 ```bash
-./hydracore heroes3 savegame data/heroes3/savegames/testing/x5.GM1 dump hero --out-file aa.bin --filter-name Манфред
+./hydracore heroes3 savegame data/heroes3/savegames/testing/x5.GM1 dump hero \
+--out-file aa.bin --filter-name Манфред
 ```
 
 Change hero:
@@ -92,7 +93,7 @@ for artifact in Artifacts('hota').Relic():
 
 
 Thanks to
----------
+=========
 
 h3sed a Heroes3 Savegame Editor by Erki Suurjaak: https://github.com/suurjaak/h3sed
 
@@ -104,7 +105,7 @@ This software is not an official addon or a set of official utilities for Heroes
 
 
 License
--------
+=======
 
 Copyright (c) 2023 by hydra-core aka TechnoCore
 
