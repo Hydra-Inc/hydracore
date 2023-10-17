@@ -19,7 +19,7 @@ def error(code: str, message: str, sys_message: Optional[str] = None):
     if sys_message:
         d['sys_message'] = sys_message
     print(json.dumps(d))
-    sys.exit(1)
+    sys.exit(0)
 
 
 def ok(data: Dict):
