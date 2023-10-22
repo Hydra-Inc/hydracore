@@ -475,21 +475,28 @@ class JOMain(TheTemplateTrainer):
         return ['jebus_outcast_v2.81', 'jebus_outcast_v2.82', 'jebus_outcast_v2.83a']
 
     def check(self):
-        if self.ScenarioInfo:
-            if self.ScenarioInfo.HumanCount != 1:
-                raise RuntimeError(
-                    'Current trainer supports only one human map')
-        self.get_player_hero()
+        # Somehow the generated map againts AIs still writes it has 4 humans!
+        #if self.ScenarioInfo:
+        #    if self.ScenarioInfo.HumanCount != 1:
+        #        raise RuntimeError(
+        #            'Current trainer supports only one human map')
+        if self.Date is None:
+            raise RuntimeError(
+                    'Current trainer works only if Date is set')
 
     def run(self):
         self.player_color = player_color = self.get_player_hero()
         self.player_main = MostExperiencedHero(FilterByColor(
             self.Heroes, player_color))
 
-        ais_colors = list(set(PlayersColors(self.Heroes)
-                              ).difference({player_color}))
+        ais_colors = sorted([color for color in set(PlayersColors(self.Heroes)
+                              ).difference({player_color}) if color is not None])
         self.ai_heroes = ai_heroes = [MostExperiencedHero(FilterByColor(
             self.Heroes, color)) for color in ais_colors]
+
+        
+
+        
 
         # VARIANT 1:
         ai_hero_booster = JO_AIHeroBooster(self)

@@ -165,6 +165,9 @@ class _SaveGame(SaveGame):
     @property
     def date(self) -> Date:
         return self._date
+
+    def set_date(self, date: Date):
+        self._date = date
     
     @property
     def title(self) -> Optional[str]:
@@ -180,8 +183,11 @@ class _SaveGame(SaveGame):
 
     def dump_info(self):
         print(f'Version of the Game saved the file is {self._version[0]}.{self._version[1]} ({self.ver})')
-        passed = str(days_passed(self._date))
-        print(f'  Month {self._date.month}  Week {self._date.week}  Day {self._date.day},  days passed {passed}')
+        if self._date:
+            passed = str(days_passed(self._date))
+            print(f'  Month {self._date.month}  Week {self._date.week}  Day {self._date.day},  days passed {passed}')
+        else:
+            print(f'  Month ???  Week ???  Day ???')
         print(f'  Title: {self._title}')
         print(f'  Description: {self._description}')
         print(f'  Map File: {self._map_file_location}')
@@ -203,13 +209,15 @@ class _SaveGame(SaveGame):
 
         # Date of the savegame
         date = list(self.sgfile.regex_search(self.date_regex()))
-        if len(date) != 1:
-            raise ValueError(f'Cannot locate date in the savegame, found locations: ' + str(len(date)))
-        _, m = date[0]
-        day = struct.unpack('<B', m.group('day'))[0]
-        week = struct.unpack('<B', m.group('week'))[0]
-        month = struct.unpack('<B', m.group('month'))[0]
-        self._date = Date(int(month), int(week), int(day))
+        if len(date) == 1:
+            _, m = date[0]
+            day = struct.unpack('<B', m.group('day'))[0]
+            week = struct.unpack('<B', m.group('week'))[0]
+            month = struct.unpack('<B', m.group('month'))[0]
+            self._date = Date(int(month), int(week), int(day))
+        else:
+            self._date = None
+            #raise ValueError(f'Cannot locate date in the savegame, found locations: ' + str(len(date)))
 
         # Title
         tandd = list(self.sgfile.regex_search(self.title_and_description_regex()))

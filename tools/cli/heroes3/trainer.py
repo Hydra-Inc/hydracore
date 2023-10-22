@@ -71,13 +71,17 @@ def run_add_cmdargs(parser, subparsers):
 
     p.add_argument('trainer', choices=[trainer_id for trainer_id in sorted(trainers.get_ids())],
                    help="select trainer you want to run")
-
+    
     p.add_argument('savegame', type=str, action='store',
                    help="savegame to patch")
 
     p.add_argument('--difficulty', choices=[dif.name for dif in Difficulty],
                    required=False, default=Difficulty.Medium.name,
                    help="difficulty to run the trainer")
+
+    p.add_argument('--date', type=int,
+                   required=False,
+                   help="explicitly set the date in format 111 or 143")
 
     p.add_argument('--out-file', metavar='PATH', type=str, action='store',
                    required=True, help="output savegame file name")
@@ -97,6 +101,8 @@ def run_main(cmdargs):
 
     from hydracore.format.heroes3 import Heroes3SaveGameFile
     from hydracore.heroes3.model.map import maybe_map_info
+    from hydracore.heroes3.model.scenario import maybe_scenario_info
+    from hydracore.heroes3.model.time import from_num
     from hydracore.heroes3.savegame.main import savegame
     from hydracore.heroes3.trainer.main import get_trainer
     from hydracore.heroes3.trainer.base import Difficulty
@@ -106,6 +112,11 @@ def run_main(cmdargs):
         heroes3sg = savegame(sgf)
         heroes3sg.unpack()
         heroes = [hero for hero in heroes3sg.heroes() if hero.Hired]
+
+        if cmdargs.date is not None:
+            heroes3sg.set_date(from_num(cmdargs.date))
+        if heroes3sg.date is None:
+            raise RuntimeError(f'Date not identified, please set it manually')
 
         trainer = get_trainer(cmdargs.trainer,
                               date=heroes3sg.date,
@@ -121,8 +132,11 @@ def run_main(cmdargs):
             trainer.Random.load(cmdargs.in_flow)
 
         mapinfo = maybe_map_info(heroes3sg.title, heroes3sg.description)
-
+        scenario = maybe_scenario_info(heroes3sg.title, heroes3sg.description)
+        
         trainer.SetMapTerrainInfo(mapinfo)
+        trainer.SetScenarioInfo(scenario)
+        trainer.check()
         trainer.run()
 
         heroes3sg.pack()

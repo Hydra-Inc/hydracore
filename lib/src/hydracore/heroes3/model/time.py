@@ -11,7 +11,7 @@ class Date:
 def from_num(x: int) -> Date:
     if x < 111 or x > 999:
         raise RuntimeError('Date is invalid')
-    d = Date()
+    d = Date(0,0,0)
     d.day = x % 10
     x = x // 10
     d.week = x % 10

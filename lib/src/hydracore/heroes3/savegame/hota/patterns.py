@@ -179,8 +179,8 @@ HERO_REGEX_ORIG = re.compile(b"""
 
 
 # Regex to locate the date
-DATE_REGEX = re.compile(b"""
-    \x40{10,}                  # some stranges '@'
+DATE_REGEX_OLD = re.compile(b"""
+    [\xFF\x01\x04\x40]{10,}    # some stranges '@'
 
     [\xFF\x01\x04\x40]{32,}    # followed by 0xff
     [\xFF]{160,}               # followed by 0xff
@@ -192,6 +192,18 @@ DATE_REGEX = re.compile(b"""
     (?P<month>[\x01-\x50])\x00 # 2 bytes - month - max - 50 months!
 
 """, re.VERBOSE | re.DOTALL)
+
+DATE_REGEX = re.compile(b"""
+    [\xFF]{160,}               # followed by 0xff
+    [^\xFF]                    # usually a null
+    .{10}                      # something
+
+    (?P<day>[\x01-\x07])\x00   # 2 bytes - day
+    (?P<week>[\x01-\x04])\x00  # 2 bytes - week
+    (?P<month>[\x01-\x50])\x00 # 2 bytes - month - max - 50 months!
+
+""", re.VERBOSE | re.DOTALL)
+
 
 
 # DATE_REGEX = re.compile(b"""

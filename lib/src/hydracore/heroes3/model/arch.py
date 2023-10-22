@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, IntEnum
 
 
 class Slot(str, Enum):
@@ -17,7 +17,7 @@ class Slot(str, Enum):
         return str(slot).replace('Slot.','')
 
 
-class Color(Enum):
+class Color(IntEnum):
     Red = 1
     Blue = 2
     Tan = 3
