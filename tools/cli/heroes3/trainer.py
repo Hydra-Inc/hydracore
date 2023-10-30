@@ -2,7 +2,6 @@ import datetime
 
 from hydracore.utils.filters import filter_seq, filter_by_bool_fld, filter_by_sub_fld
 from hydracore.heroes3.model.game import VERSIONS, SUPPORTED_LANGUAGES
-# from hydracore.heroes3.trainers import VERSIONS, SUPPORTED_LANGUAGES
 
 
 def trainer_add_cmdargs(parser, subparsers):
@@ -12,7 +11,6 @@ def trainer_add_cmdargs(parser, subparsers):
         title='action', metavar='ACTION', dest='action_command')
 
     list_add_args(p, trainer_action_subparser)
-    info_add_cmdargs(p, trainer_action_subparser)
     run_add_cmdargs(p, trainer_action_subparser)
 
     p.set_defaults(main=trainer_main)
@@ -42,25 +40,6 @@ def list_main(cmdargs):
     print()
 
 
-def info_add_cmdargs(parser, subparsers):
-    p = subparsers.add_parser('list', help='list all trainers')
-    p.set_defaults(action_command=(lambda cmdargs: list_main(cmdargs)))
-
-
-def info_main(cmdargs):
-
-    from hydracore.heroes3.trainer.list import TrainerList
-
-    trainers = TrainerList()
-    print('Available trainers:')
-    i = 0
-    for trainer_id in sorted(trainers.get_ids()):
-        i += 1
-        trainer = trainers.at(trainer_id)
-        print(f'  {i}. {trainer_id} - {trainer.title}')
-    print()
-
-
 def run_add_cmdargs(parser, subparsers):
     p = subparsers.add_parser('run', help='run selected trainer')
     p.set_defaults(action_command=(lambda cmdargs: run_main(cmdargs)))
@@ -71,7 +50,7 @@ def run_add_cmdargs(parser, subparsers):
 
     p.add_argument('trainer', choices=[trainer_id for trainer_id in sorted(trainers.get_ids())],
                    help="select trainer you want to run")
-    
+
     p.add_argument('savegame', type=str, action='store',
                    help="savegame to patch")
 
@@ -133,7 +112,7 @@ def run_main(cmdargs):
 
         mapinfo = maybe_map_info(heroes3sg.title, heroes3sg.description)
         scenario = maybe_scenario_info(heroes3sg.title, heroes3sg.description)
-        
+
         trainer.SetMapTerrainInfo(mapinfo)
         trainer.SetScenarioInfo(scenario)
         trainer.check()

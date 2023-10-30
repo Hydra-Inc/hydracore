@@ -458,6 +458,72 @@ class Hero:
                 self.AddSpell(spell)
         return avail_slot
 
+    def PutOnSlotSingle(self, slotid: str, artifact: Artifact, add_spell: bool = False) -> str:
+        """
+        Put the artifact exectly in requested slot without taking other slots
+        for case of Combined artifact
+        """
+        if not self._slots.get(slotid):
+            raise RuntimeError(f'Bad slot provided {slotid}')
+        ArtifactId = artifact.name
+
+        tempslots = copy.deepcopy(self._slots)
+        avail_slot = self._get_avail_exact_slot(
+            artifact.MainSlot(), slotid, tempslots)
+        if not avail_slot:
+            self.dump()
+            raise RuntimeError(
+                f'No available slots to put artifact {artifact.name}')
+
+        self._slots[avail_slot]['artifact'] = ArtifactId
+        self._slots[avail_slot]['blocked'] = False
+
+        if add_spell:
+            for spell in artifact.spells:
+                self.AddSpell(spell)
+        return avail_slot
+
+    def BlockCombinedArtifacts(self):
+        """
+        Function to block slots taken by combined artifacts
+
+        Used in case when we unpack hero from savegame, the Golden Goose
+        can take side2, side4, side5.. And side3 could be taken
+        """
+
+        # check that already propagated the blocking slots
+        for slot in self.Slots():
+            if self._slots[slot]['blocked']:
+                return
+
+        # now process the combined artifacts
+        for slot in self.Slots():
+            artifact = self.ArtifactInSlot(slot)
+            if artifact is None:
+                continue
+            if artifact.cls != ArtifactClass.Combination:
+                continue
+            if self._slots[slot]['blocked']:
+                continue
+
+            ArtifactId = artifact.name
+
+            tempslots = copy.deepcopy(self._slots)
+
+            extra = artifact.ExtraSlots()
+            avail_extra = []
+            if extra:
+                for slot in extra:
+                    avail = self._get_avail_slot(slot, tempslots)
+                    if not avail:
+                        raise RuntimeError(
+                            f'No available extra slots to put artifact {artifact.name}')
+                    avail_extra.append(avail)
+
+            for extra in avail_extra:
+                self._slots[extra]['artifact'] = ArtifactId
+                self._slots[extra]['blocked'] = True
+
     def _TakeOff(self, slot: str, slots: Dict) -> Optional[ArtifactId]:
         """
         Removes the artifact that is taking requested slot.
@@ -558,7 +624,7 @@ class Hero:
 
     def ArmySlotsCount(self):
         return 7
-    
+
     def DropAllCreatures(self):
         for n in range(1, self.ArmySlotsCount()+1):
             self.DropCreature(n)

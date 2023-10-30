@@ -314,10 +314,12 @@ class _SavizableHero(SavizableHero):
                 # locate the artifact and put in on hero
                 artifact = Artifacts(self.ver).Get(artid_to_name.get(artid))
 
-            slotid = self.PutOnSlot(slot, artifact)
+            slotid = self.PutOnSlotSingle(slot, artifact)
             if slotid != slot:
                 raise RuntimeError(
                     f"We've put an artifact {artifact.name} in slot {slotid}, but parsed in on slot {slot}")
+            
+        self.BlockCombinedArtifacts()
 
     def pack_artifacts(self, chunk: Chunk):
         """

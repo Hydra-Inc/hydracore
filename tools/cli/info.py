@@ -33,9 +33,3 @@ def info_main(cmdargs):
     heroes3sg = savegame(sgf)
 
     print(heroes3sg)
-
-    return 
-    sg = Savefile(cmdargs.savegame)
-    print('VERSION', sg.raw[8], sg.raw[12] )
-
-    print()
