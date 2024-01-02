@@ -8,8 +8,8 @@ from .patterns import DATE_REGEX, MAP_FILE_REGEX, TITLE_AND_DESCRIPTION_REGEX
 
 class HotaSaveGame(_SaveGame):
 
-    def __init__(self, sg: Heroes3SaveGameFile, verbose: bool = False):
-        super().__init__(sg, 'hota', verbose)
+    def __init__(self, sg: Heroes3SaveGameFile, verbose: bool = False, ver: str = 'hota'):
+        super().__init__(sg, ver, verbose)
 
     def date_regex(self) -> Pattern[str]:
         return DATE_REGEX

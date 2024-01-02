@@ -422,7 +422,7 @@ class _SavizableHero(SavizableHero):
         for slot in range(self.ArmySlotsCount()):
             armid = chunk.to_long(self.offset('army_types') + slot * 4)
             armcnt = chunk.to_long(self.offset('army_counts') + slot * 4)
-
+            # print(self.Name, 'GOT ARMY', armid, armcnt)
             if creatureid_to_name.get(armid) is None:
                 if armid != EMPTY_LONG and armid != 0:
                     raise ValueError(

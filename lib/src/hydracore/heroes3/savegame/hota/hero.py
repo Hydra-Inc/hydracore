@@ -15,7 +15,7 @@ from .patterns import HERO_REGEX, HERO_OFFSETS, HERO_NAME_OFFSET, HERO_REGEX_EXT
 from typing import Optional
 
 
-class HOTAHeroSavizable(HOTAHero, _SavizableHero):
+class BaseHOTAHeroSavizable(_SavizableHero):
 
     def pack(self, map_info: Optional[MapBannedInfo] = None) -> Chunk:
         """
@@ -127,5 +127,10 @@ class HOTAHeroSavizable(HOTAHero, _SavizableHero):
         if self.Cannon:
             chunk.put_long(self.id('Cannon'), self.offset('ballista'))
         
+
+
+class HOTAHeroSavizable(HOTAHero, BaseHOTAHeroSavizable):
+    pass
+
 
 TheSavizableHero = HOTAHeroSavizable
