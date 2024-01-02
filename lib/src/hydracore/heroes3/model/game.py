@@ -20,6 +20,9 @@ VERSIONS = {
     'hota': {
         'title': "Horn of the Abyss"
     },
+    'hota17': {
+        'title': "Horn of the Abyss with Factory"
+    },
 }
 
 

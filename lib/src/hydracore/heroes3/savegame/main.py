@@ -1,5 +1,6 @@
 import importlib
 import struct
+import re
 
 from typing import List, Optional, Pattern
 
@@ -118,6 +119,12 @@ def _savegame(sg: Heroes3SaveGameFile, ver: Optional[str] = None, verbose: bool 
         minor = sg.data[12]
         if major >= 44 and minor >= 5:
             ver = 'hota'
+            HOTA17_TITLE_OFFSET = re.compile(b"""
+                H3SVG.{65}..\x01
+            """, re.VERBOSE | re.DOTALL)
+            toff = list(sg.regex_search(HOTA17_TITLE_OFFSET))
+            if len(toff) >= 1:
+                ver = 'hota17'
         else:
             ver = 'sod'
     check_version(ver)
@@ -224,7 +231,7 @@ class _SaveGame(SaveGame):
         if len(tandd) != 1:
             raise ValueError(f'Cannot locate title and description in the savegame, found locations: ' + str(len(tandd)))
         _, m = tandd[0]
-        self._title = to_text(m.group('title1') if m.group('title1') else m.group('title2'))
+        self._title = to_text(m.group('title1') if m.group('title1') else (m.group('title2') if m.group('title2') else m.group('title3')))
         self._description = to_text(m.group('description'))
 
         # Map File

@@ -3,8 +3,8 @@ from ..hero import Hero
 
 class HOTAHero(Hero):
 
-    def __init__(self):
-        super().__init__('hota')
+    def __init__(self, ver: str='hota'):
+        super().__init__(ver)
         self._cannon = False
 
     @property
