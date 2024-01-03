@@ -262,7 +262,13 @@ class _SaveGame(SaveGame):
                 print(f'Located Hero from {chunk.start} to {chunk.end}')
             hero = self._new_hero()
             hero.set_verbose(self.verbose)
-            hero.unpack(chunk, m)
+            try:
+                hero.unpack(chunk, m)
+            except:
+                # TODO: fix this problem see bug1 in HotA1.7 tests
+                if len(hero.Name)<=1:
+                    continue
+                raise
 
             self._heroes.append(hero)
 
