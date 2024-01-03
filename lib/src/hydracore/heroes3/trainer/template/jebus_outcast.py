@@ -39,7 +39,6 @@ class JO_AIHeroArmyBooster(HeroBaseBooster):
     def boost(self, hero: Hero):
 
         weeks = weeks_passed(self.Trainer.Date)
-
         self.Creatures = list(Creatures(hero.ver).Town(hero.Town))
         self.TheDate = self.Trainer.Date
 

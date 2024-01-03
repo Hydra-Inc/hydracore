@@ -57,6 +57,10 @@ class Creature:
     @staticmethod
     def Cove(level: int, upg: int, name: str, ai_val: int):
         return Creature(name, 'Cove', upg, level, ai_val)
+
+    @staticmethod
+    def Factory(level: int, upg: int, name: str, ai_val: int):
+        return Creature(name, 'Factory', upg, level, ai_val)
     
     @staticmethod
     def Neutral(level: int, upg: int, name: str, ai_val: int):
@@ -77,6 +81,7 @@ def Creatures(ver: str) -> 'CreaturesPool':
 class CreaturesPool:
     def __init__(self, ver):
         self.storage = {}
+        self.ver = ver
         modname = f'.{ver}.creatures'
         mod = importlib.import_module(modname, __package__)
         self.storage = getattr(mod, 'DATA')
