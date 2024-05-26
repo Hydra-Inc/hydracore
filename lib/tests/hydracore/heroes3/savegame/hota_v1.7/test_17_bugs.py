@@ -9,4 +9,11 @@ def test_savegame_jo_failed_a_hero_with_name_len_1():
     sg = savegame(Heroes3SaveGameFile(
         'data/heroes3/savegames/hota_v1.7/bug1_conflux_bad_hero.GM1')) 
     sg.unpack()    
-    
+
+
+def test_savegame_jo_title():
+    sg = savegame(Heroes3SaveGameFile(
+        'data/heroes3/savegames/hota_v1.7/bug2_fortress_template.GM1'))
+    sg.unpack()
+    assert 'Jebus Outcast 2.96a [1 Hero]' in sg.description
+

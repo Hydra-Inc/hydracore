@@ -233,6 +233,6 @@ TITLE_AND_DESCRIPTION_REGEX = re.compile(b"""
     H3SVG.{65}                      # start of the file
     ( (?P<title1>[^\x00\x01]{3,}) | .\x01 (?P<title2>[^\x00\x01]+) | ..\x01 (?P<title3>[^\x00\x01]+) ) [\x00-\x01] 
     
-    (?P<description>[\\[\\]a-zA-Z0-9 \xC0-\xFF\xB8\xA8\\.\x2c\x2d\x3f;-]+) 
+    (?P<description>[\\[\\]a-zA-Z0-9 \xC0-\xFF\xB8\xA8\\.\x2c\x2d\x3f;\\(\\)-]+) 
     #\x01\x00
 """, re.VERBOSE | re.DOTALL)

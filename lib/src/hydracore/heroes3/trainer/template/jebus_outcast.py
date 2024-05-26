@@ -471,7 +471,7 @@ class JOMain(TheTemplateTrainer):
         return 'Boost enemy army and hero on Jebus Outcast'
 
     def supported_templates(self) -> List[str]:
-        return ['jebus_outcast_v2.81', 'jebus_outcast_v2.82', 'jebus_outcast_v2.83a', 'jebus_outcast_v2.96 test v1']
+        return ['jebus_outcast_v2.81', 'jebus_outcast_v2.82', 'jebus_outcast_v2.83a', 'jebus_outcast_v2.96 test v1', 'jebus_outcast_v2.96a [1 Hero]',]
 
     def check(self):
         # Somehow the generated map againts AIs still writes it has 4 humans!
